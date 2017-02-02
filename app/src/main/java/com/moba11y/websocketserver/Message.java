@@ -7,7 +7,7 @@ import com.google.gson.JsonParser;
 /**
  * Stores messages as JSON objects, and ensures incoming messages have the expected properties.
  */
-@SuppressWarnings("unused")
+@SuppressWarnings({"unused", "WeakerAccess"})
 public class Message {
 
     private final JsonObject mJsonObject;
@@ -22,7 +22,7 @@ public class Message {
         MessageException(Exception e) { super(e);}
     }
 
-    Message(String type, JsonElement data) {
+    public Message(String type, JsonElement data) {
         mJsonObject = new JsonObject();
         mJsonObject.addProperty(Property.TYPE.name().toLowerCase(), type);
         mJsonObject.add(Property.DATA.name().toLowerCase(), data);
