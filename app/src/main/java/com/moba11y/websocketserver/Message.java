@@ -51,4 +51,8 @@ class Message {
             return element.getAsJsonObject();
         }
     }
+
+    public String toString() {
+        return mJsonObject.toString();
+    }
 }

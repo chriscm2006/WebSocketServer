@@ -20,12 +20,11 @@ public class WebSocket {
         mWebSocket = webSocket;
     }
 
-    public void send(JsonObject data) {
-        mWebSocket.send(data.toString());
+    public void send(Message message) {
+        mWebSocket.send(message.toString());
     }
-
     public interface WebSocketEventListener {
-        JsonElement onEvent(JsonObject jsonObject);
+        void onEvent(WebSocket socket, JsonObject jsonObject);
     }
 
     public void addEventListener(final String eventName, WebSocketEventListener webSocketEventListener) {
@@ -36,6 +35,6 @@ public class WebSocket {
         final String type = message.getType();
         final JsonObject data = message.getData();
 
-        mWebSocketEventListeners.get(type).onEvent(data);
+        mWebSocketEventListeners.get(type).onEvent(this, data);
     }
 }
