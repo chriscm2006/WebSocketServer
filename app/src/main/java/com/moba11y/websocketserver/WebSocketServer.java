@@ -14,7 +14,8 @@ import java.net.InetSocketAddress;
 @SuppressWarnings("unused")
 public class WebSocketServer extends org.java_websocket.server.WebSocketServer {
 
-    interface WebSocketServerCallbacks {
+    @SuppressWarnings("WeakerAccess")
+    public interface WebSocketServerCallbacks {
         void onWebSocketConnected(WebSocket webSocket);
         void onWebSocketClosed(WebSocket webSocket);
     }
