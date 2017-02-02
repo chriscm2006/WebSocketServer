@@ -8,7 +8,7 @@ import com.google.gson.JsonParser;
  * Stores messages as JSON objects, and ensures incoming messages have the expected properties.
  */
 @SuppressWarnings("unused")
-class Message {
+public class Message {
 
     private final JsonObject mJsonObject;
 
