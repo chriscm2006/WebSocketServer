@@ -12,19 +12,13 @@ import java.net.InetSocketAddress;
  * applications.
  */
 @SuppressWarnings("unused")
-public class WebSocketServer extends org.java_websocket.server.WebSocketServer {
+public abstract class WebSocketServer extends org.java_websocket.server.WebSocketServer {
 
-    @SuppressWarnings("WeakerAccess")
-    public interface WebSocketServerCallbacks {
-        void onWebSocketConnected(WebSocket webSocket);
-        void onWebSocketClosed(WebSocket webSocket);
-    }
+    public abstract void onWebSocketConnected(WebSocket webSocket);
+    public abstract void onWebSocketClosed(WebSocket webSocket);
 
-    private final WebSocketServerCallbacks mWebSocketServerCallbacks;
-
-    public WebSocketServer(InetSocketAddress address, WebSocketServerCallbacks callbacks) {
+    public WebSocketServer(InetSocketAddress address) {
         super(address);
-        mWebSocketServerCallbacks = callbacks;
     }
 
     private SparseArray<WebSocket> mWebSockets = new SparseArray<>();
@@ -33,12 +27,12 @@ public class WebSocketServer extends org.java_websocket.server.WebSocketServer {
     public final void onOpen(org.java_websocket.WebSocket conn, ClientHandshake handshake) {
         WebSocket webSocket = new WebSocket(conn);
         mWebSockets.put(conn.hashCode(), webSocket);
-        mWebSocketServerCallbacks.onWebSocketConnected(webSocket);
+        onWebSocketConnected(webSocket);
     }
 
     @Override
     public final void onClose(org.java_websocket.WebSocket conn, int code, String reason, boolean remote) {
-        mWebSocketServerCallbacks.onWebSocketClosed(mWebSockets.get(conn.hashCode()));
+        onWebSocketClosed(mWebSockets.get(conn.hashCode()));
         mWebSockets.remove(conn.hashCode());
     }
 
