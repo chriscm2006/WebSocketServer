@@ -8,10 +8,10 @@ import com.google.gson.JsonObject;
 public interface Validator {
 
     class ValidatorException extends Message.MessageException {
-        ValidatorException(String message) {
+        public ValidatorException(String message) {
             super(message);
         }
-        ValidatorException(Exception e) {
+        public ValidatorException(Exception e) {
             super(e);
         }
     }
