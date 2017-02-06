@@ -28,7 +28,7 @@ public class WebSocket {
     }
 
     public void addEventListener(final String eventName, WebSocketEventListener webSocketEventListener) {
-        CLog.d("Adding Event Listener: " + eventName);
+        CLog.w("Adding Event Listener: " + eventName);
 
         mWebSocketEventListeners.put(eventName, webSocketEventListener);
     }
@@ -37,7 +37,7 @@ public class WebSocket {
         final String type = message.getType();
         final JsonObject data = message.getData();
 
-        CLog.d("Incoming message: " + message.toString());
+        CLog.w("Incoming message: " + message.toString());
 
         mWebSocketEventListeners.get(type).onEvent(this, data);
     }
