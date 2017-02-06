@@ -1,6 +1,7 @@
 package com.moba11y.websocketserver;
 
 import com.chriscm.clog.CLog;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
 import java.util.Map;

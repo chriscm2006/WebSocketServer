@@ -28,6 +28,12 @@ public class Message {
         mJsonObject.add(Property.DATA.name().toLowerCase(), data);
     }
 
+    public Message(String type, String data) {
+        mJsonObject = new JsonObject();
+        mJsonObject.addProperty(Property.TYPE.name().toLowerCase(), type);
+        mJsonObject.addProperty(Property.DATA.name().toLowerCase(), data);
+    }
+
     Message(String message) throws MessageException {
         mJsonObject = new JsonParser().parse(message).getAsJsonObject();
 
