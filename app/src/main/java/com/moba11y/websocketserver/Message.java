@@ -14,7 +14,7 @@ public class Message {
 
     private enum Property {TYPE, DATA}
 
-    class MessageException extends Exception {
+    static class MessageException extends Exception {
         MessageException(String message) {
             super(message);
         }
@@ -34,12 +34,15 @@ public class Message {
         mJsonObject.addProperty(Property.DATA.name().toLowerCase(), data);
     }
 
-    Message(String message) throws MessageException {
+    Message(String message, Validator validator) throws MessageException {
+
         mJsonObject = new JsonParser().parse(message).getAsJsonObject();
 
-        for (Property property : Property.values()) {
-            if (!mJsonObject.has(property.name().toLowerCase())) {
-                throw new MessageException("Resulting JSON Object did not have expected property: " + property.name().toLowerCase());
+        if (validator.validate(mJsonObject)) {
+            for (Property property : Property.values()) {
+                if (!mJsonObject.has(property.name().toLowerCase())) {
+                    throw new MessageException("Resulting JSON Object did not have expected property: " + property.name().toLowerCase());
+                }
             }
         }
     }

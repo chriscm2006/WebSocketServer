@@ -5,14 +5,12 @@ import com.google.gson.JsonObject;
 /**
  * Validators validate incoming JSON Objects before the IncomingMessage can be constructed.
  */
-@SuppressWarnings("unused")
 interface Validator {
 
-    class ValidatorException extends Exception {
+    class ValidatorException extends Message.MessageException {
         ValidatorException(String message) {
             super(message);
         }
-
         ValidatorException(Exception e) {
             super(e);
         }

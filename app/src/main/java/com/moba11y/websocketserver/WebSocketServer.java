@@ -2,9 +2,12 @@ package com.moba11y.websocketserver;
 
 import android.util.SparseArray;
 
+import com.google.gson.JsonObject;
+
 import org.java_websocket.handshake.ClientHandshake;
 
 import java.net.InetSocketAddress;
+import java.util.ArrayList;
 
 /**
  * A wrapper around the WebSocketServer that changes the public API to something
@@ -16,6 +19,8 @@ public abstract class WebSocketServer extends org.java_websocket.server.WebSocke
 
     public abstract void onWebSocketConnected(WebSocket webSocket);
     public abstract void onWebSocketClosed(WebSocket webSocket);
+
+    private ArrayList<Validator> mValidators = new ArrayList<>();
 
     public WebSocketServer(InetSocketAddress address) {
         super(address);
@@ -40,12 +45,21 @@ public abstract class WebSocketServer extends org.java_websocket.server.WebSocke
     public final void onMessage(org.java_websocket.WebSocket conn, String messageString) {
 
         try {
-            Message message = new Message(messageString);
+            Message message = new Message(messageString, new Validator() {
+
+                @Override
+                public boolean validate(JsonObject jsonObject) throws ValidatorException {
+                    for (Validator validator : mValidators) {
+                        if (!validator.validate(jsonObject)) return false;
+                    }
+
+                    return true;
+                }
+
+            });
 
             WebSocket webSocket = mWebSockets.get(conn.hashCode());
-
             webSocket.onMessage(message);
-
         } catch (Message.MessageException e) {
             e.printStackTrace();
         }
@@ -54,5 +68,13 @@ public abstract class WebSocketServer extends org.java_websocket.server.WebSocke
     @Override
     public final void onError(org.java_websocket.WebSocket conn, Exception ex) {
         ex.printStackTrace();
+    }
+
+    public void addValidator(Validator validator) {
+        mValidators.add(validator);
+    }
+
+    public void removeValidator(Validator validator) {
+        mValidators.remove(validator);
     }
 }
