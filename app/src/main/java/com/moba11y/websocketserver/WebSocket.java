@@ -1,6 +1,6 @@
 package com.moba11y.websocketserver;
 
-import com.google.gson.JsonElement;
+import com.chriscm.clog.CLog;
 import com.google.gson.JsonObject;
 
 import java.util.Map;
@@ -28,6 +28,8 @@ public class WebSocket {
     }
 
     public void addEventListener(final String eventName, WebSocketEventListener webSocketEventListener) {
+        CLog.d("Adding Event Listener: " + eventName);
+
         mWebSocketEventListeners.put(eventName, webSocketEventListener);
     }
 
@@ -35,6 +37,7 @@ public class WebSocket {
         final String type = message.getType();
         final JsonObject data = message.getData();
 
+        CLog.d("Incoming message Type: " + type + " Data: " + data.toString());
         mWebSocketEventListeners.get(type).onEvent(this, data);
     }
 }
