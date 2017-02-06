@@ -5,7 +5,7 @@ import com.google.gson.JsonObject;
 /**
  * Validators validate incoming JSON Objects before the IncomingMessage can be constructed.
  */
-interface Validator {
+public interface Validator {
 
     class ValidatorException extends Message.MessageException {
         ValidatorException(String message) {

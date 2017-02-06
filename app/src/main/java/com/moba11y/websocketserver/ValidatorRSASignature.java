@@ -21,7 +21,7 @@ public class ValidatorRSASignature implements Validator {
     private final PublicKey mPublicKey;
     private SignatureMethod mSignatureMethod;
 
-    ValidatorRSASignature(PublicKey publicKey) {
+    public ValidatorRSASignature(PublicKey publicKey) {
         mPublicKey = publicKey;
         mSignatureMethod = SignatureMethod.SHA256withRSA;
     }
