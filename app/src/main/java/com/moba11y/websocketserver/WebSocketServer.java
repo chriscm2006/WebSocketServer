@@ -45,8 +45,6 @@ public abstract class WebSocketServer extends org.java_websocket.server.WebSocke
     @Override
     public final void onMessage(org.java_websocket.WebSocket conn, String messageString) {
 
-        CLog.v("Incoming Message: " + messageString);
-
         try {
             Message message = new Message(messageString, new Validator() {
 
