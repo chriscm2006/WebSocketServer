@@ -2,6 +2,7 @@ package com.moba11y.websocketserver;
 
 import android.util.SparseArray;
 
+import com.chriscm.clog.CLog;
 import com.google.gson.JsonObject;
 
 import org.java_websocket.handshake.ClientHandshake;
@@ -43,6 +44,8 @@ public abstract class WebSocketServer extends org.java_websocket.server.WebSocke
 
     @Override
     public final void onMessage(org.java_websocket.WebSocket conn, String messageString) {
+
+        CLog.v("Incoming Message: " + messageString);
 
         try {
             Message message = new Message(messageString, new Validator() {

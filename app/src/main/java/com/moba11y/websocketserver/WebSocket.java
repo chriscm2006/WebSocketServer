@@ -1,7 +1,6 @@
 package com.moba11y.websocketserver;
 
 import com.chriscm.clog.CLog;
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
 import java.util.Map;
@@ -29,7 +28,7 @@ public class WebSocket {
     }
 
     public void addEventListener(final String eventName, WebSocketEventListener webSocketEventListener) {
-        CLog.w("Adding Event Listener: " + eventName);
+        CLog.v("Adding Event Listener: " + eventName);
 
         mWebSocketEventListeners.put(eventName, webSocketEventListener);
     }
@@ -38,12 +37,12 @@ public class WebSocket {
         final String type = message.getType();
         final JsonObject data = message.getData();
 
-        CLog.e("Incoming message: " + message.toString());
+        CLog.v("Incoming message: " + message.toString());
 
         WebSocketEventListener webSocketEventListener = mWebSocketEventListeners.get(type);
 
         if (webSocketEventListener == null) {
-            CLog.e("No Event Listener for event: " + type);
+            CLog.w("No Event Listener for event: " + type);
             return;
         }
 
