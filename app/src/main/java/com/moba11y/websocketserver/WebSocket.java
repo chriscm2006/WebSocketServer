@@ -34,8 +34,9 @@ public class WebSocket {
     public void onMessage(final Message message) {
         final String type = message.getType();
         final JsonObject data = message.getData();
+        final String dataString = (data == null) ? "null" : data.toString();
 
-        CLog.v(type + ": " + data.toString());
+        CLog.v(type + ": " + dataString);
 
         WebSocketEventListener webSocketEventListener = mWebSocketEventListeners.get(type);
 
